@@ -10,7 +10,7 @@ class QuadratureMethod:
         self.ie = ie
         self.y = []
 
-    def run(self) -> list[float]:
+    def resolve(self) -> list[float]:
         for i in range(self.ie.n):
             self.y.append(self.next(i))
         return self.y

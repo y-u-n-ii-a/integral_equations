@@ -15,12 +15,15 @@ class EquationOne(BaseIntegralEquation):
     def f(self, i):
         return math.e ** (-self.x[i])
 
-# todo we have a solution to this ie (y === 1)
+
+class ExactSolutionOne(EquationOne):
+    def resolve(self):
+        return [1 for _ in self.x]
 
 
 class EquationTwo(BaseIntegralEquation):
     def K(self, i, j):
-        return 1 + self.x[i] - self.x[j]
+        return math.e ** (self.x[i] - self.x[j])
 
     def A(self, i, j):
         if j == 0 or i == j:
@@ -28,6 +31,14 @@ class EquationTwo(BaseIntegralEquation):
         return self.h
 
     def f(self, i):
-        return 3 * (math.e ** (-2*self.x[i])) + 2 * self.x[i] + 1
+        return math.e ** (-self.x[i]) * math.sin(self.x[i])
 
-# todo we have a solution to this ie (page 48)
+
+class ExactSolutionTwo(EquationTwo):
+    def resolve(self):
+        return [
+            0.1 * math.e ** (2 * x)
+            - 0.1 * math.e ** (-x) * math.cos(x)
+            + 0.7 * math.e ** (-x) * math.sin(x)
+            for x in self.x
+        ]
