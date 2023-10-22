@@ -1,3 +1,5 @@
+from tabulate import tabulate
+
 from quadrature_method.examples import (
     EquationOne,
     EquationTwo,
@@ -7,8 +9,27 @@ from quadrature_method.examples import (
 from quadrature_method.method import QuadratureMethod
 
 if __name__ == "__main__":
-    # todo compare results with different n
-    print(QuadratureMethod(EquationOne(0, 0.1, 6)).resolve())
-    print(ExactSolutionOne(0, 0.1, 6).resolve())
-    print(QuadratureMethod(EquationTwo(0, 1, 11)).resolve())
-    print(ExactSolutionTwo(0, 1, 11).resolve())
+    examples = (
+        (EquationOne, ExactSolutionOne, (0, 0.1, 6)),
+        (EquationTwo, ExactSolutionTwo, (0, 1, 51)),
+    )
+
+    for equation_class, solution, input_data in examples:
+        equation = equation_class(*input_data)
+        approximate = QuadratureMethod(equation).resolve()
+        exact = solution(*input_data).resolve()
+        inaccuracy = [abs(ex - ap) for ex, ap in zip(exact, approximate)]
+        print(
+            tabulate(
+                {
+                    # A little issue with formatting
+                    "x[i]": [f'\x1b[38;5;236m.\x1b[0m{i}' for i in equation.x],
+                    "Exact": exact,
+                    "Approximate": approximate,
+                    "Inaccuracy": inaccuracy,
+                },
+                headers="keys",
+                tablefmt="fancy_grid",
+                floatfmt=".16",
+            )
+        )

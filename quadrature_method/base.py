@@ -5,7 +5,7 @@ class BaseIntegralEquation:
     def __init__(self, a: float, b: float, n: int):
         self.n = n
         self.h = (b - a) / (n - 1)
-        self.x = [self.h * i for i in range(0, n)]
+        self.x = [round(self.h * i, 4) for i in range(0, n)]
 
     @abstractmethod
     def K(self, i, j):
