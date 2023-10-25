@@ -1,9 +1,9 @@
-from quadrature_method.base import BaseIntegralEquation
+from examples.base import BaseIntegralEquation
 
 
 class QuadratureMethod:
     def __init__(self, ie: BaseIntegralEquation):
-        """Init.
+        """Initialize.
 
         :param ie: Integral equation
         """
@@ -11,11 +11,17 @@ class QuadratureMethod:
         self.y = []
 
     def resolve(self) -> list[float]:
+        """Find a resolution."""
         for i in range(self.ie.n):
             self.y.append(self.next(i))
         return self.y
 
     def next(self, i: int) -> float:
+        """Find value for the next point.
+
+        :param i: Index of a point
+        :return: Function value in a point with index i.
+        """
         if i == 0:
             return self.ie.f(i)
         components = [

@@ -1,6 +1,6 @@
 import math
 
-from quadrature_method.base import BaseIntegralEquation
+from examples.base import BaseIntegralEquation
 
 
 class EquationOne(BaseIntegralEquation):
